@@ -9,7 +9,8 @@ module.exports = Marionette.ItemView.extend({
     events: {
         'submit form': 'submit',
         'click .send': 'submit',
-        'keyup input': 'resetUnread'
+        'keyup input': 'resetUnread',
+        'keydown input': 'inputKeyDown'
     },
 
     triggers: {
@@ -41,5 +42,9 @@ module.exports = Marionette.ItemView.extend({
             inputPlaceholder: this.getOption('inputPlaceholder'),
             sendButtonText: this.getOption('sendButtonText')
         };
+    },
+
+    inputKeyDown: function(e) {
+        e.stopPropagation();
     }
 });

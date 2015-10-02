@@ -192,18 +192,20 @@ module.exports = function(grunt) {
         },
 
         maxcdn: {
-          purgeCache: {
-            options: {
-              companyAlias:   '<%= maxcdn.options.companyAlias %>',
-              consumerKey:    '<%= maxcdn.options.consumerKey %>',
-              consumerSecret: '<%= maxcdn.options.consumerSecret %>',
-              zone_id:        '<%= maxcdn.options.zoneId %>',
-              method:         'delete'
+            purgeCache: {
+                options: {
+                    companyAlias: '<%= maxcdn.options.companyAlias %>',
+                    consumerKey: '<%= maxcdn.options.consumerKey %>',
+                    consumerSecret: '<%= maxcdn.options.consumerSecret %>',
+                    zone_id: '<%= maxcdn.options.zoneId %>',
+                    method: 'delete'
+                },
+                files: [
+                    {
+                        dest: '/supportkit.min.js'
+                    }
+                ],
             },
-            files: [
-              { dest: '/supportkit.min.js' }
-            ],
-          },
         },
 
         release: {
@@ -356,9 +358,9 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('build', ['clean', 'browserify', 'uglify']);
-    grunt.registerTask('devbuild', ['clean', 'browserify', 'loadConfig', 'replace']);
+    grunt.registerTask('devbuild', ['clean', 'browserify', 'uglify', 'loadConfig', 'replace']);
     grunt.registerTask('devbuild:min', ['clean', 'browserify', 'loadConfig', 'setMinMode', 'replace', 'uglify']);
-    grunt.registerTask('deploy', ['build', 'awsconfig', 'maxcdnconfig','s3:js', 'maxcdn']);
+    grunt.registerTask('deploy', ['build', 'awsconfig', 'maxcdnconfig', 's3:js', 'maxcdn']);
     grunt.registerTask('run', ['runlog', 'devbuild', 'concurrent:dev']);
     grunt.registerTask('run:min', ['runlog', 'devbuild:min', 'concurrent:min']);
     grunt.registerTask('test', ['karma:unit']);

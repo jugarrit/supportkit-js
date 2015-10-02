@@ -19,6 +19,7 @@ var endpoint = require('./endpoint');
 var api = require('./utils/api');
 
 var SK_STORAGE = 'sk_deviceid';
+var SK_STORAGE_USERID = 'sk_appuserid';
 
 // appends the compile stylesheet to the HEAD
 require('../stylesheets/main.less');
@@ -173,6 +174,8 @@ _.extend(SupportKit.prototype, Backbone.Events, {
             .then(_(function(res) {
                 this.user.set(res.appUser);
                 endpoint.appUserId = this.user.id;
+
+                localStorage.setItem(SK_STORAGE_USERID, this.user.id);
 
                 this._eventCollection.url = urljoin('appusers', this.user.id, 'event');
 
